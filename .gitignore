@@ -66,6 +66,9 @@ wp-content/updraft/
 # WP-CLI
 wp-cli.local.yml
 
+# Local Env
+wp-config-local.php
+
 # Dotenv
 .env
 .env.*
