@@ -5,12 +5,57 @@
       "contentSize": "960px",
       "wideSize": "1280px"
     },
+    "styles": {
+        "spacing": {
+            "blockGap": null
+        }
+    },
     "color": {
       "palette": [
         {
+          "name": "Gray Lightest",
+          "slug": "gray-lightest",
+          "color": "#ffffff"
+        },
+        {
+          "name": "Gray Lighter",
+          "slug": "gray-lighter",
+          "color": "#fbfbfb"
+        },
+        {
+          "name": "Gray Light",
+          "slug": "gray-light",
+          "color": "#f7f7f7"
+        },
+        {
+          "name": "Gray Mid Light",
+          "slug": "gray-mid-light",
+          "color": "#d3d6da"
+        },
+        {
+          "name": "Gray Mid Dark",
+          "slug": "gray-mid-dark",
+          "color": "#717171"
+        },
+        {
+          "name": "Gray Dark",
+          "slug": "gray-dark",
+          "color": "#333333"
+        },
+        {
+          "name": "Gray Darker",
+          "slug": "gray-darker",
+          "color": "#1a1a1b"
+        },
+        {
+          "name": "Gray Darkest",
+          "slug": "gray-darkest",
+          "color": "#0d0d0d"
+        },
+        {
           "name": "Primary",
           "slug": "primary",
-          "color": "#0EA5E9"
+          "color": "#EE3831"
         },
         {
           "name": "Secondary",
@@ -27,7 +72,9 @@
           "slug": "light",
           "color": "#F9FAFB"
         }
-      ]
+      ],
+      "custom": false,
+      "defaultPalette": false
     },
     "typography": {
       "fontSizes": [

@@ -1,0 +1,19 @@
+{
+    "apiVersion": 2,
+    "name": "tailpress/hero",
+    "title": "Hero",
+    "category": "design",
+    "icon": "star-filled",
+    "description": "A Hero section with a customizable heading",
+    "supports": {
+        "html": false
+    },
+    "textdomain": "tailpress",
+    "editorScript": "file:./index.js",
+    "attributes": {
+        "heading": {
+            "type": "string",
+            "default": "Your Heading Here"
+        }
+    }
+}

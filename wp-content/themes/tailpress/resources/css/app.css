@@ -1,5 +1,111 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-
+@import "variables.css";
 @import "custom.css";
+
+@layer base {
+    :root {
+      color: var(--color-tone-2);
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: var(--font-primary);
+    }
+    h2, h3, h4, h5, h6 {
+      color: var(--color-tone-1);
+      font-family: var(--font-secondary);
+    }
+    p {
+      @apply text-lg;
+    }
+  }
+  
+
+  
+  @layer components {
+    input, select {
+      @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+    }
+    .svg-converted {
+      width: auto;
+      height: auto;
+      max-height: 100%;
+      max-width: 100%;
+    }
+    .bg-alternate:nth-child(even) {
+      background-color: var(--color-tone-5);
+    }
+    .bg-alternate:nth-child(odd) {
+      background-color: var(--color-tone-7);
+    }
+    .btn {
+      @apply font-semibold uppercase text-sm text-center;
+      @apply px-4 py-2 inline-block;
+      @apply transition duration-150 ease-in-out;
+      transition: color .15s ease-in-out, background-color .2s ease-in-out, border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+    }
+    .btn-lg {
+      @apply px-8 py-3;
+    }
+    .btn-md {
+      @apply px-8 py-3;
+    }
+    @media (min-width: 768px) {
+      .btn-lg {
+        @apply px-10 py-4.5;
+      } 
+      .btn-md {
+        @apply px-8 py-3;
+      }
+    }
+    .btn-primary {
+      @apply border-2 ;
+      color: var(--color-primary);
+      background-color: var(--color-primary-background);
+      border-color: var(--color-primary-border);
+    }
+    .btn-primary:hover,
+    .btn-primary:focus,
+    .btn-primary:active {
+      background-color: var(--color-primary-background-hover);
+      color: var(--color-primary-hover);
+      border-color: var(--color-primary-border-hover);
+    }
+    .btn-outline {
+      @apply border-2 border-solid;
+      background: var(--color-btn-outline-primary-background);
+      border-color: var(--color-btn-outline-primary-border);
+    }
+    .btn-outline:hover,
+    .btn-outline:focus,
+    .btn-outline:active {
+      @apply border-2;
+      color: var(--color-btn-outline-text-hover);
+      background-color: var(--color-btn-outline-primary-background-hover);
+      border-color: var(--color-btn-outline-primary-border-hover);
+    }
+    .btn-primary-onBackground {
+      @apply border-2;
+      color: var(--color-primary-onBackground);
+      background: var(--color-primary-onBackground-background);
+      border-color: var(--color-primary-onBackground-border);
+    }
+    .btn-primary-onBackground:hover,
+    .btn-primary-onBackground:focus,
+    .btn-primary-onBackground:active {
+      color: var(--color-primary-onBackground-hover);
+      background: var(--color-primary-onBackground-background-hover);
+    }
+    .section-py {
+      @apply py-10 sm:py-11 md:py-12 lg:py-14 xl:py-16;
+    }
+  }
+
+  @layer utilities {
+    .dim-bg {
+      filter: brightness(80%);
+    }
+  }

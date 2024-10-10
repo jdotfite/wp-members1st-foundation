@@ -1,6 +1,8 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "app.css"; 
 
+/* Force dark mode in editor */
 body {
     @apply font-sans;
 }
@@ -16,3 +18,4 @@ body {
 .wp-block[data-align=full] {
     @apply max-w-full;
 }
+

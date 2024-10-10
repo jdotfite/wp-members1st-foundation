@@ -12,10 +12,10 @@ mix.webpackConfig({
     ] }
 });
 
-mix.js('resources/js/app.js', 'js');
+mix.js('resources/js/app.js', 'js')
+   .js('src/blocks/custom-button/index.js', 'build/blocks/custom-button'); // New line for custom button block
 
 mix.postCss("resources/css/app.css", "css");
-
 mix.postCss("resources/css/editor-style.css", "css");
 
 // mix.browserSync({

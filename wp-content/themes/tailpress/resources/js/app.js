@@ -6,3 +6,13 @@ window.addEventListener('load', function () {
             main_navigation.classList.toggle('hidden');
       });
 });
+
+
+import { initSvgConverter } from './modules/svg-converter';
+import { initThemeToggle } from './modules/theme-toggle';
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    initSvgConverter();
+    initThemeToggle();
+});

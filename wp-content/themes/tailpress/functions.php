@@ -1,111 +1,112 @@
 <?php
 
-/**
- * Theme setup.
- */
+// Theme setup: Add support for various features
 function tailpress_setup() {
-	add_theme_support( 'title-tag' );
-
-	register_nav_menus(
-		array(
-			'primary' => __( 'Primary Menu', 'tailpress' ),
-		)
-	);
-
-	add_theme_support(
-		'html5',
-		array(
-			'search-form',
-			'comment-form',
-			'comment-list',
-			'gallery',
-			'caption',
-		)
-	);
-
-    add_theme_support( 'custom-logo' );
-	add_theme_support( 'post-thumbnails' );
-
-	add_theme_support( 'align-wide' );
-	add_theme_support( 'wp-block-styles' );
-
-	add_theme_support( 'responsive-embeds' );
-
-	add_theme_support( 'editor-styles' );
-	add_editor_style( 'css/editor-style.css' );
+    add_theme_support('title-tag');
+    add_theme_support('html5', ['search-form', 'comment-form', 'comment-list', 'gallery', 'caption']);
+    add_theme_support('custom-logo');
+    add_theme_support('post-thumbnails');
+    add_theme_support('align-wide');
+    add_theme_support('wp-block-styles');
+    add_theme_support('responsive-embeds');
+    add_theme_support('editor-styles');
+    add_editor_style('css/editor-style.css');
+    add_theme_support('block-patterns');
 }
+add_action('after_setup_theme', 'tailpress_setup');
 
-add_action( 'after_setup_theme', 'tailpress_setup' );
-
-/**
- * Enqueue theme assets.
- */
+// Enqueue theme assets (CSS and JS)
 function tailpress_enqueue_scripts() {
-	$theme = wp_get_theme();
+    $theme = wp_get_theme();
+    wp_enqueue_style('tailpress', tailpress_asset('css/app.css'), [], $theme->get('Version'));
+    wp_enqueue_script('tailpress', tailpress_asset('js/app.js'), [], $theme->get('Version'));
+}
+add_action('wp_enqueue_scripts', 'tailpress_enqueue_scripts');
 
-	wp_enqueue_style( 'tailpress', tailpress_asset( 'css/app.css' ), array(), $theme->get( 'Version' ) );
-	wp_enqueue_script( 'tailpress', tailpress_asset( 'js/app.js' ), array(), $theme->get( 'Version' ) );
+// Get asset path, with cache-busting in development
+function tailpress_asset($path) {
+    return wp_get_environment_type() === 'production' ? 
+           get_stylesheet_directory_uri() . '/' . $path : 
+           add_query_arg('time', time(), get_stylesheet_directory_uri() . '/' . $path);
 }
 
-add_action( 'wp_enqueue_scripts', 'tailpress_enqueue_scripts' );
+// Include custom patterns
+require get_template_directory() . '/patterns/hero.php';
+require get_template_directory() . '/patterns/text-left-image-right.php';
 
-/**
- * Get asset path.
- *
- * @param string  $path Path to asset.
- *
- * @return string
- */
-function tailpress_asset( $path ) {
-	if ( wp_get_environment_type() === 'production' ) {
-		return get_stylesheet_directory_uri() . '/' . $path;
-	}
-
-	return add_query_arg( 'time', time(),  get_stylesheet_directory_uri() . '/' . $path );
+// Add custom classes to menu items
+function tailpress_nav_menu_add_classes($classes, $item, $args) {
+    if (isset($args->li_class)) {
+        $classes[] = $args->li_class;
+    }
+    return $classes;
 }
+add_filter('nav_menu_css_class', 'tailpress_nav_menu_add_classes', 10, 3);
 
-/**
- * Adds option 'li_class' to 'wp_nav_menu'.
- *
- * @param string  $classes String of classes.
- * @param mixed   $item The current item.
- * @param WP_Term $args Holds the nav menu arguments.
- *
- * @return array
- */
-function tailpress_nav_menu_add_li_class( $classes, $item, $args, $depth ) {
-	if ( isset( $args->li_class ) ) {
-		$classes[] = $args->li_class;
-	}
-
-	if ( isset( $args->{"li_class_$depth"} ) ) {
-		$classes[] = $args->{"li_class_$depth"};
-	}
-
-	return $classes;
+// Register navigation menus
+function tailpress_register_menus() {
+    register_nav_menus([
+        'primary' => __('Primary Menu', 'tailpress'),
+        'footer-menu' => __('Footer Menu', 'tailpress'),
+    ]);
 }
+add_action('after_setup_theme', 'tailpress_register_menus');
 
-add_filter( 'nav_menu_css_class', 'tailpress_nav_menu_add_li_class', 10, 4 );
-
-/**
- * Adds option 'submenu_class' to 'wp_nav_menu'.
- *
- * @param string  $classes String of classes.
- * @param mixed   $item The current item.
- * @param WP_Term $args Holds the nav menu arguments.
- *
- * @return array
- */
-function tailpress_nav_menu_add_submenu_class( $classes, $args, $depth ) {
-	if ( isset( $args->submenu_class ) ) {
-		$classes[] = $args->submenu_class;
-	}
-
-	if ( isset( $args->{"submenu_class_$depth"} ) ) {
-		$classes[] = $args->{"submenu_class_$depth"};
-	}
-
-	return $classes;
+// Add a custom footer text section to the Customizer
+function theme_customize_register($wp_customize) {
+    $wp_customize->add_section('footer_section', [
+        'title' => __('Footer', 'tailpress'),
+        'priority' => 30,
+    ]);
+    $wp_customize->add_setting('footer_text', [
+        'default' => 'Your default footer text here.',
+        'sanitize_callback' => 'wp_kses_post',
+    ]);
+    $wp_customize->add_control('footer_text', [
+        'label' => __('Footer Text', 'tailpress'),
+        'section' => 'footer_section',
+        'type' => 'textarea',
+    ]);
 }
+add_action('customize_register', 'theme_customize_register');
 
-add_filter( 'nav_menu_submenu_css_class', 'tailpress_nav_menu_add_submenu_class', 10, 3 );
+// Add custom classes to menu link items
+function tailpress_nav_menu_link_attributes($atts, $item, $args) {
+    if (isset($args->link_class)) {
+        $atts['class'] = $args->link_class;
+    }
+    return $atts;
+}
+add_filter('nav_menu_link_attributes', 'tailpress_nav_menu_link_attributes', 10, 3);
+
+
+function tailpress_enqueue_block_editor_assets() {
+    wp_enqueue_script(
+        'tailpress-custom-button',
+        get_template_directory_uri() . '/build/blocks/custom-button/index.js',
+        array('wp-blocks', 'wp-i18n', 'wp-element', 'wp-editor'),
+        filemtime(get_stylesheet_directory() . '/build/blocks/custom-button/index.js')
+    );
+}
+add_action('enqueue_block_editor_assets', 'tailpress_enqueue_block_editor_assets');
+
+function tailpress_register_custom_blocks() {
+    if (function_exists('register_block_type')) {
+        register_block_type('tailpress/custom-button', array(
+            'editor_script' => 'tailpress-custom-button',
+        ));
+    }
+}
+add_action('init', 'tailpress_register_custom_blocks');
+
+// Adding Dark Theme Switch to Editor via plugin
+function enqueue_editor_theme_toggle() {
+    wp_enqueue_script(
+        'editor-theme-toggle',
+        get_template_directory_uri() . '/inc/editor-plugins/theme-toggle.js',
+        array('wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-i18n'),
+        filemtime(get_template_directory() . '/inc/editor-plugins/theme-toggle.js'),
+        true
+    );
+}
+add_action('enqueue_block_editor_assets', 'enqueue_editor_theme_toggle');

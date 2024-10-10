@@ -1,94 +1,86 @@
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> class="<?php echo is_admin_bar_showing() ? 'admin-bar' : ''; ?> <?php echo 'dankarvaq'; ?>">
+<script>
+    // Immediately set dark mode class if necessary
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    } else {
+        document.documentElement.classList.remove('dark')
+    }
+</script>
 <head>
-	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width">
-	<link rel="profile" href="http://gmpg.org/xfn/11">
-	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+    <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
-	<?php wp_head(); ?>
+    <?php wp_head(); ?>
 </head>
 
-<body <?php body_class( 'bg-white text-gray-900 antialiased' ); ?>>
+<body <?php body_class( 'bg-gray-lightest text-gray-darkest antialiased' ); ?>>
 
 <?php do_action( 'tailpress_site_before' ); ?>
 
 <div id="page" class="min-h-screen flex flex-col">
 
-	<?php do_action( 'tailpress_header' ); ?>
+    <?php do_action( 'tailpress_header' ); ?>
 
-	<header>
+    <header class="header">
+    <nav id="site-navigation" class="fixed w-full z-20 top-0 start-0 bg-gray-lightest border-b border-gray-light dark:border-gray-darkest">
+    <div class="container flex flex-wrap items-center justify-between mx-auto py-4">
+        <!-- Logo -->
+        <a href="<?php echo home_url('/'); ?>" class="flex items-center space-x-3 rtl:space-x-reverse">
+		<svg class="h-11" id="Layer_1" version="1.1" viewBox="0 0 155.1 46.7" x="0" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" y="0"><style>
+                .st0 { fill: #ee3129 }
+                .st2 { fill: none; stroke: #231f20; stroke-width: .75; stroke-miterlimit: 10 }
+                .dark .st2 { stroke: #ddd; }
+                .st3 { fill: #fff; }
+                .st4 { fill: #23f20; }
+                .dark .st4 { fill: #ddd; }
+              </style><path class="st0" d="M63.2 23h.3l.1 2.2h-.5c-.4-1.3-1.3-2-2.5-2-1.8 0-3.1 1.4-3.1 3.4 0 2.1 1.4 3.6 3.2 3.6 1.2 0 2.1-.7 2.7-1.8h.5c-.1.6-.5 1.8-.7 2.3-.2-.1-.4-.1-.8-.1-.6 0-1.2.2-2.2.2-2.6 0-4.6-1.8-4.6-4.1 0-2.4 2.2-4.2 4.9-4.2 1.3 0 2.2.5 2.4.5.2.2.2.1.3 0zM69.7 22.8v.5h-.2c-.7 0-1 .3-1 .9v2h4.2v-2c0-.6-.2-1-.9-1h-.2v-.5h4.1v.5h-.2c-.7 0-1 .3-1 .9v5c0 .6.2.9 1 .9h.2v.5h-4.1V30h.2c.8 0 1-.3 1-1v-2h-4.2v2.3c0 .6.2.9 1 .9h.2v.5h-4.1v-.5h.2c.7 0 1-.3 1-.9v-5.1c0-.6-.2-.9-1-.9h-.2v-.5h4zM82.3 22.6l2.5 6.4c.3.9.7 1.1 1.3 1.1v.5H82v-.5h.4c.6 0 .8-.2.8-.5 0-.2-.1-.3-.7-2h-2.8c-.6 1.7-.7 1.8-.7 2 0 .4.4.5 1.1.5h.2v.5h-3.4v-.5h.2c.7 0 1-.4 1.2-1.2l2.2-6-.1-.4h1.9zm-2.4 4.5h2.2l-1.2-3-1 3zM93.2 27c.9.8 1.4 2 2.4 2.8.4.3.8.5 1.4.5v.5h-.8c-1.9 0-2.5-.3-3.5-1.7-.6-.9-1.1-1.5-1.5-1.8h-1v2c0 .5.2.9 1 .9h.4v.5h-4.4v-.5h.3c.7 0 1-.3 1-.9v-5.1c0-.6-.2-.9-1.1-.9h-.2v-.5l1.8-.1c.9 0 1.5-.1 1.9-.1 1.8 0 2.7.2 3.3.7s.8 1 .8 1.6c.1 1-.6 1.8-1.8 2.1zm-2.9-.1h.5c1.8 0 2.5-.6 2.5-1.8 0-1.4-1-1.8-2.3-1.8h-.6v3.6zM102.1 22.8v.5h-.2c-.8 0-1 .3-1 .9v5.1c0 .6.2.9 1 .9h.2v.5h-4v-.5h.2c.7 0 .9-.3.9-.8v-5.2c0-.6-.2-.9-1-.9h-.1v-.5h4zM103.9 22.6h.4c.2.2.3.2.6.2h6.1c.3 0 .4 0 .6-.2h.4l.2 2.4h-.5c-.2-1.2-.3-1.5-1.3-1.5h-1.6v5.8c0 .7.3.9 1.2.9h.2v.5h-4.6v-.5h.4c.8 0 1-.4 1-.9v-5.8h-1.6c-.9 0-1.1.2-1.3 1.5h-.5l.3-2.4zM118 22.6l2.5 6.4c.3.9.7 1.1 1.3 1.1v.5h-4.1v-.5h.4c.6 0 .8-.2.8-.5 0-.2-.1-.3-.7-2h-2.8c-.6 1.7-.7 1.8-.7 2 0 .4.4.5 1.1.5h.2v.5h-3.4v-.5h.2c.7 0 1-.4 1.2-1.2l2.2-6.1-.1-.4c.1.2 1.9.2 1.9.2zm-2.3 4.5h2.2l-1.2-3-1 3zM129.2 26.2c1.2.3 2 1.1 2 2.2 0 1.4-1.4 2.4-3.2 2.4h-5v-.5c1.1 0 1.5-.2 1.5-1v-4.8c0-.9-.2-1-1-1h-.4V23l1.8-.1c.7 0 1.6-.1 1.9-.1 1.3 0 2.2.1 2.9.5.7.4 1.1 1 1.1 1.6-.1.6-.6 1.1-1.6 1.3zm-2.9-.2h1.1c.6 0 1.5-.2 1.5-1.3 0-1-.6-1.5-1.9-1.5h-.6l-.1 2.8zm0 3.1c0 .8.3 1.1 1.2 1.1 1.1 0 1.8-.6 1.8-1.8 0-1.1-.7-1.9-1.9-1.9h-1l-.1 2.6zM137.1 22.8v.5h-.3c-.8 0-1 .4-1 .9v5.2c0 .4.1.5.6.5h1.7c.9 0 1.2-.5 1.9-1.5h.5l-.9 2.2h-6.8v-.5h.2c.8 0 1.1-.3 1.1-.9v-5.1c0-.6-.3-.9-1-.9h-.2v-.5c-.1.1 4.2.1 4.2.1zM148.5 22.8l.1 1.8h-.5c-.1-.7-.2-1.1-.8-1.1h-2.8v2.9h2.1c.6 0 .9-.2.9-.9h.5V28h-.5c0-.8-.3-.9-1.1-.9h-1.9v2.3c0 .5.1.6.4.6h2.2c.9 0 1.2-.5 1.4-1.3h.5l-.1 2h-7.6v-.5h.5c.6 0 1.1-.2 1.1-.9v-5.1c0-.6-.2-.9-1-.9h-.2v-.5h6.8zM61.9 34.2V36h-.5c0-.9-.3-1.1-.8-1.1h-2.5v2.9H60c.8 0 1.1-.2 1.1-.9h.5v2.5h-.5c0-.7-.3-.9-.8-.9h-2v2.1c0 .8.1 1 .9 1h.2v.5h-3.8v-.5h.2c.6 0 .8-.2.8-.7v-5.2c0-.7-.2-1-.8-1h-.1v-.5h6.2zM68.2 42.2c-2.8 0-4.6-1.7-4.6-4 0-2.5 2-4.3 4.9-4.3 2.7 0 4.5 1.7 4.5 4-.1 2.5-2 4.3-4.8 4.3zm2.8-3.8c0-2.2-1.1-4-3-4-1.6 0-2.7 1.2-2.7 3.2 0 2.4 1.2 4.1 3 4.1s2.7-1.3 2.7-3.3zM77.9 34.2v.5h-.2c-.6 0-.9.3-.9.8v3.9c0 1.3.9 2 2.3 2 1.7 0 2.5-1 2.5-2.3V36c0-.8-.2-1.3-1.1-1.3h-.2v-.5h3.3v.5h-.2c-.8 0-1.1.3-1.1 1V39c0 2.1-1.2 3.3-3.6 3.3-2.4 0-3.7-1.1-3.7-2.9v-3.9c0-.6-.2-.8-.9-.8H74v-.5h3.9zM86.9 34.2l5.2 5.4v-3.9c0-.9-.3-1-1.2-1h-.2v-.5H94v.5h-.2c-.7 0-.9.2-.9.6v6.8h-.7l-6.1-6.4v4.8c0 .8.3 1 1.3 1v.5h-3.1v-.5h.2c.7 0 .9-.3.9-.8v-5.8c-.3-.2-.6-.3-1-.3v-.5c-.1.1 2.5.1 2.5.1zM103.2 40.8c-.8.8-2.1 1.3-4.2 1.3h-4.1v-.5c.9 0 1.2-.2 1.2-.9v-5c0-.8-.2-1-1.2-1v-.5l2.5-.1h1.3c1.7 0 2.7.2 3.4.4 1.4.6 2.3 1.9 2.3 3.5 0 1-.4 2-1.2 2.8zm-5.4-.1c0 .8.2.9 1.1.9 2.3 0 3.6-1.4 3.6-3.5 0-.9-.3-1.9-.9-2.5-.6-.6-1.4-1-2.9-1-.3 0-.6 0-1 .1.1 0 .1 6 .1 6zM110 34l2.5 6.5c.3.9.7 1.1 1.3 1.1v.5h-4.1v-.5h.4c.6 0 .8-.2.8-.5 0-.2-.1-.3-.7-2h-2.8c-.6 1.7-.7 1.8-.7 2 0 .4.4.5 1.1.5h.2v.5h-3.4v-.5h.2c.7 0 1-.4 1.2-1.2l2.2-6-.1-.4h1.9zm-2.3 4.4h2.2l-1.2-3-1 3zM113.9 34h.4c.2.2.3.2.6.2h6.1c.3 0 .4 0 .6-.2h.4l.2 2.4h-.5c-.2-1.2-.3-1.5-1.3-1.5h-1.6v5.8c0 .7.3.9 1.2.9h.2v.4h-4.6v-.5h.4c.8 0 1-.4 1-.9v-5.8h-1.6c-.9 0-1.1.2-1.3 1.5h-.5l.3-2.3zM127.2 34.2v.5h-.2c-.8 0-1 .3-1 .9v5.1c0 .6.2.9 1 .9h.2v.5h-4v-.5h.2c.7 0 .9-.3.9-.8v-5.2c0-.6-.2-.9-1-.9h-.1v-.5h4zM133.1 42.2c-2.8 0-4.6-1.7-4.6-4 0-2.5 2-4.3 4.9-4.3 2.7 0 4.5 1.7 4.5 4 0 2.5-1.9 4.3-4.8 4.3zm2.9-3.8c0-2.2-1.1-4-3-4-1.6 0-2.6 1.2-2.6 3.2 0 2.4 1.2 4.1 3 4.1 1.6 0 2.6-1.3 2.6-3.3zM141.8 34.2l5.2 5.4v-3.9c0-.9-.3-1-1.2-1h-.1v-.5h3.3v.5h-.2c-.7 0-.9.2-.9.6v6.8h-.7l-6.1-6.4v4.8c0 .8.3 1 1.3 1v.5h-3.1v-.5h.1c.7 0 .9-.3.9-.8v-5.8c-.3-.2-.6-.3-1-.3v-.5c-.1.1 2.5.1 2.5.1z"></path><path class="st4" d="m57.7 8.6-.4 7.7c-.1 1.4 0 2.1 1.3 2.1v.9h-3.5v-.9c1.2 0 1.3-.5 1.3-2.3l.3-7.8c0-1.1 0-1.6-1.1-1.6v-.9H59l3.1 9.1 3-9.1h3.4v.8c-1.2.1-1.2.1-1.2 1.6l.4 8c.1 1.8.1 2 1.4 2.1v.9h-5v-.9h.3c.7 0 1.2 0 1.2-1.4v-1l-.4-7.7-3.6 10.9h-.4L57.7 8.6zM78 7h-3.5v4.9h2.6c.9 0 1.2-.4 1.2-1.6h.6v4.3h-.6c0-1.2-.2-1.6-1.4-1.6h-2.3v3.9c0 .9.1 1.1.6 1.1h2.7c1 0 1.5-.4 1.8-2.2h.6l-.2 3.4h-9.6v-.9h.7c.9 0 1.2-.5 1.2-1.5V8.2c0-1.2-.3-1.6-1.4-1.6h-.2v-.8h8.7l.2 3.1h-.6C79 7.5 78.8 7 78 7zm5.7 1.6-.4 7.7c-.1 1.4 0 2.1 1.3 2.1v.9h-3.5v-.9c1.2 0 1.3-.5 1.3-2.3l.3-7.8c0-1.1 0-1.6-1-1.6v-.9h3.4l3.1 9.1 3-9.1h3.4v.8c-1.2.1-1.2.1-1.2 1.6l.4 8c.1 1.8.1 2 1.4 2.1v.9h-5v-.9h.3c.7 0 1.2 0 1.2-1.4v-1l-.3-7.7-3.6 10.9h-.4L83.7 8.6zm13.9 0c0-1.7-.2-1.9-1.4-1.9h-.4v-.9c.4 0 1.2-.1 2-.2 1-.1 1.9-.2 2.6-.2 2 0 3.5.3 4.4 1.6.4.5.6 1.3.6 2 0 1.3-.6 2.1-1.9 2.5 1.6.5 2.5 1.9 2.5 3.6 0 2.2-1.5 4.1-4.1 4.1h-6.2v-.9c1.6 0 1.9-.5 1.9-1.8V8.6zm2.2 2.6h1.2c1.6 0 2-1.2 2-2.3 0-1.2-.4-2.6-2.4-2.6-.3 0-.6 0-.8.1v4.8zm0 5.2c0 1.6.4 1.9 1.4 1.9 1.8 0 2.2-1.5 2.2-3 0-1.3-.5-3.2-2.5-3.2-.3 0-.9 0-1.2.1l.1 4.2zM114.1 7h-3.5v4.9h2.6c.9 0 1.2-.4 1.2-1.6h.6v4.3h-.6c0-1.2-.2-1.6-1.4-1.6h-2.3v3.9c0 .9.1 1.1.6 1.1h2.7c1 0 1.5-.4 1.8-2.2h.6l-.2 3.4h-9.6v-.9h.7c.9 0 1.2-.5 1.2-1.5V8.2c0-1.2-.3-1.6-1.4-1.6h-.2v-.8h8.7l.2 3.1h-.6c-.1-1.4-.4-1.9-1.1-1.9zm6.7 9.8c0 1.1.3 1.6 1.2 1.6h.5v.9h-5.6v-.9h.3c1 0 1.4-.3 1.4-1.6V8.3c0-1-.2-1.6-1.3-1.6h-.3v-.9c.8-.1 1.4-.1 2.1-.2.9-.1 2.1-.2 2.6-.2 2.3 0 3.6.4 4.4 1.5.5.7.8 1.6.8 2.5 0 1.6-.9 2.9-2.4 3.5 1 1.2 1.6 2.9 2.8 4.4.7.9 1.1 1.2 2.1 1.3v.9h-1c-2 0-2.8-.4-3.5-1.4-.8-1.1-1.7-3.3-2.8-4.5h-1.2l-.1 3.2zm0-4.2h.6c1.9 0 3-.8 3-3.1s-1.3-3.1-2.8-3.1h-.8v6.2zm9.2 2.7h.6c.5 2.1 1.5 3.2 2.7 3.2 1 0 1.9-.9 1.9-2.1 0-3.2-5.1-3.1-5.1-7.4 0-2.1 1.3-3.5 3.2-3.5 1.2 0 2.2.6 2.4.6.1 0 .2 0 .4-.2h.4l.3 3.5h-.6c-.4-1.7-1.4-2.9-2.6-2.9-.9 0-1.6.7-1.6 1.5 0 2 2.6 2.4 4.4 4.8.7.9.9 1.8.9 2.9 0 2.2-1.5 4-3.4 4-1.3 0-2.4-.7-2.7-.7-.1 0-.3.1-.4.4h-.4l-.4-4.1zm16.9 2.3c0 .6.1 1 .6 1h1v.7h-5.1v-.7h1c.4 0 .5-.4.5-.9V8.2c-.5.4-1.2.9-1.9 1.2l-.2-.7c1.2-.8 2.3-1.9 3.1-3.2h.9l.1 12.1zm2.1-6.5h.3c.1.7.5 1.1 1 1.1.3 0 .5-.3.5-.6 0-.9-1.7-1.2-1.7-2.7 0-1 .6-1.6 1.4-1.6.4 0 .7.1 1 .3v1.3h-.3c-.1-.7-.5-1-.9-1-.2 0-.4.2-.4.5 0 1 1.8 1 1.8 2.8 0 .9-.5 1.6-1.2 1.6-.6 0-.9-.2-1-.2 0 0-.1 0-.2.1h-.3v-1.6zm4.9 0c0 .5.1.7.4.7.2 0 .4-.2.7-.6l.1.4c-.3.7-.8 1.1-1.3 1.1-.6 0-1-.5-1-1.6v-3h-.5v-.3c.5-.3 1.2-1.2 1.4-1.9h.3v1.6h1.2l-.1.7H154l-.1 2.9z"></path><path class="st2" d="M55.1.6h100M55.1 46.2h100"></path><path class="st0" d="M0 .6h46.8v45.7H0z"></path><path class="st3" d="M37.3 36c-.1 0-.2-.1-.2-.1H37c-.1 0-.2-.1-.2-.2-.3-.2-.5-.6-.5-1V10.1c0-.2-.1-.3-.3-.3h-4.2c-.2 0-.4.1-.5.3l-2.7 5.4c0 .1 0 .2.1.2h1.8c.4 0 .7.3.7.7v18.3c0 .4-.2.8-.5 1-.1.1-.2.1-.2.2h-.1c-.1 0-.2.1-.2.1h-.1v.8h7.4l-.2-.8c.1 0 .1 0 0 0z"></path><path class="st3" d="m27.8 21.5-3.5 7.1-2 4.1-1.3-2.2-.3-.5-3.2-5.5-3.5-5.8v-.1c-.1 0-.1 0-.1.1v15.8c0 .4.2.8.5 1 .2.2.4.3.7.3v.9H7.8V36c.1-.1.3-.1.4-.2.1-.1.3-.2.4-.3.2-.2.3-.4.3-.7V11.7c0-.4-.1-.6-.4-.8-.2-.2-.4-.3-.6-.4h-.2v-.7h6.6c.4 0 .8.2.9.6l4.1 7 .4.6 4 6.9 3-6.1c.1-.1.2-.2.3-.2h2c.1 0 .2.1.1.2M39.4 13.3c-.1-.1-.2-.1-.3-.2-.1-.1-.2-.1-.3-.2-.1-.1-.2-.1-.3-.1-.1 0-.2-.1-.2-.1l-.1-.1v-.2c0-.1 0-.2.1-.3s.2-.1.4-.1.3.1.5.2.2.3.3.5h.2v-1.1h-.2l-.1.2c-.1 0-.2-.1-.3-.1-.1 0-.2-.1-.3-.1-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7 0 .1 0 .3.1.4s.1.2.2.3c.1.1.2.1.3.2.1.1.2.1.3.1.1 0 .2.1.3.1s.2.1.2.1.1.1.1.2v.2c0 .2 0 .3-.1.4-.1.1-.2.1-.4.1-.1 0-.2 0-.3-.1s-.2-.1-.3-.2c-.1-.1-.1-.2-.2-.3 0-.1-.1-.2-.1-.3h-.2v1.1h.3v-.2c.1.1.2.1.3.2.1.1.3.1.5.1.3 0 .6-.1.8-.3.2-.2.3-.4.3-.7 0-.1 0-.3-.1-.4-.2-.2-.3-.2-.4-.3M41.9 14.4h-.4c-.1 0-.2 0-.2-.1s-.1-.1-.1-.1c0-.1 0-.1-.1-.2v-2h.8v-.4H41v-1h-.6v1h-.5v.4h.5v2.1c0 .2 0 .4.2.6.1.1.3.2.5.2s.3 0 .4-.1c.1 0 .2-.1.4-.1v-.3zM40.6 34.2c.7 0 1.3.6 1.3 1.3 0 .7-.6 1.3-1.3 1.3-.7 0-1.3-.6-1.3-1.3 0-.7.6-1.3 1.3-1.3zm0 .2c-.6 0-1 .5-1 1.1 0 .6.5 1.1 1 1.1.6 0 1-.5 1-1.1.1-.6-.4-1.1-1-1.1zm-.2 1.9h-.2v-1.5h.4c.2 0 .4 0 .5.1.1.1.1.2.1.3 0 .2-.1.3-.3.3.1 0 .2.1.2.3 0 .2.1.3.1.4H41s-.1-.2-.1-.4-.1-.3-.3-.3h-.2v.8zm0-.8h.2c.2 0 .3-.1.3-.2s-.1-.2-.3-.2h-.2v.4z"></path></svg>
+        </a>
 
-		<div class="mx-auto container">
-			<div class="lg:flex lg:justify-between lg:items-center border-b py-6">
-				<div class="flex justify-between items-center">
-					<div>
-						<?php if ( has_custom_logo() ) { ?>
-                            <?php the_custom_logo(); ?>
-						<?php } else { ?>
-							<a href="<?php echo get_bloginfo( 'url' ); ?>" class="font-extrabold text-lg uppercase">
-								<?php echo get_bloginfo( 'name' ); ?>
-							</a>
+        <!-- Mobile menu button -->
+        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-mid-dark rounded-lg md:hidden hover:bg-gray-lighter focus:outline-none focus:ring-2 focus:ring-gray-light dark:text-gray-lighter dark:hover:bg-brand-red dark:focus:ring-gray-mid-dark" aria-controls="navbar-sticky" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            </svg>
+        </button>
 
-							<p class="text-sm font-light text-gray-600">
-								<?php echo get_bloginfo( 'description' ); ?>
-							</p>
+        <!-- Menu items -->
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+		<?php
+wp_nav_menu(array(
+    'theme_location' => 'primary',
+    'container' => false,
+    'menu_class' => 'flex flex-col px-4 space-x-6 lg:space-x-14 font-medium rtl:space-x-reverse md:flex-row md:border-0',
+    'li_class'  => 'nav-item',
+    'link_class' => 'block font-semibold uppercase hover:text-brand-red md:tracking-tighter lg:tracking-normal page-scroll'
+));
+?>
+        </div>
 
-						<?php } ?>
-					</div>
+        <!-- Theme toggle and Donate button -->
+        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <button type="button" id="theme-toggle" class="bg-gray-200 dark:bg-gray-800 p-2.5 focus:outline-none transition duration-300 ease-in-out mr-4">
+                <svg id="theme-toggle-dark-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <svg id="theme-toggle-light-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+            <a href="#" class="btn btn-outline" type="btn">Donate</a>
+        </div>
+    </div>
+</nav>
+</header>
 
-					<div class="lg:hidden">
-						<a href="#" aria-label="Toggle navigation" id="primary-menu-toggle">
-							<svg viewBox="0 0 20 20" class="inline-block w-6 h-6" version="1.1"
-								 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-								<g stroke="none" stroke-width="1" fill="currentColor" fill-rule="evenodd">
-									<g id="icon-shape">
-										<path d="M0,3 L20,3 L20,5 L0,5 L0,3 Z M0,9 L20,9 L20,11 L0,11 L0,9 Z M0,15 L20,15 L20,17 L0,17 L0,15 Z"
-											  id="Combined-Shape"></path>
-									</g>
-								</g>
-							</svg>
-						</a>
-					</div>
-				</div>
+    <div id="content" class="site-content flex-grow">
 
-				<?php
-				wp_nav_menu(
-					array(
-						'container_id'    => 'primary-menu',
-						'container_class' => 'hidden bg-gray-100 mt-4 p-4 lg:mt-0 lg:p-0 lg:bg-transparent lg:block',
-						'menu_class'      => 'lg:flex lg:-mx-4',
-						'theme_location'  => 'primary',
-						'li_class'        => 'lg:mx-4',
-						'fallback_cb'     => false,
-					)
-				);
-				?>
-			</div>
-		</div>
-	</header>
+       
 
-	<div id="content" class="site-content flex-grow">
+        <?php do_action( 'tailpress_content_start' ); ?>
 
-		<?php if ( is_front_page() ) { ?>
-			<!-- Start introduction -->
-			<div class="container mx-auto">
-				<div class="px-12 py-16 my-12 rounded-xl bg-gradient-to-r from-blue-50 from-10% via-sky-100 via-30% to-blue-200 to-90%">
-                    <div class="mx-auto max-w-screen-md">
-                        <h1 class="text-3xl lg:text-6xl tracking-tight font-extrabold text-gray-800 mb-6">Start building your next <a href="https://tailwindcss.com" class="text-secondary">Tailwind CSS</a> flavoured WordPress theme
-                            with <a href="https://tailpress.io" class="text-primary">TailPress</a>.</h1>
-                        <p class="text-gray-600 text-xl font-medium mb-10">TailPress is your go-to starting
-                            point for developing WordPress themes with Tailwind CSS and comes with basic block-editor support out
-                            of the box.</p>
-                        <a href="https://github.com/jeffreyvr/tailpress"
-                            class="w-full sm:w-auto flex-none bg-gray-900 text-white text-lg leading-6 font-semibold py-3 px-6 border border-transparent rounded-xl focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-gray-900 focus:outline-none transition-colors duration-200">View
-                            on GitHub</a>
-                    </div>
-                </div>
-			</div>
-			<!-- End introduction -->
-		<?php } ?>
-
-		<?php do_action( 'tailpress_content_start' ); ?>
-
-		<main>
+        <main>

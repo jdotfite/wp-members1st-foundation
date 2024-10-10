@@ -1,12 +1,16 @@
 /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/***/ (() => {
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _modules_svg_converter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modules/svg-converter */ "./resources/js/modules/svg-converter.js");
+/* harmony import */ var _modules_theme_toggle__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/theme-toggle */ "./resources/js/modules/theme-toggle.js");
 // Navigation toggle
 window.addEventListener('load', function () {
   var main_navigation = document.querySelector('#primary-menu');
@@ -16,6 +20,109 @@ window.addEventListener('load', function () {
   });
 });
 
+
+document.addEventListener('DOMContentLoaded', function () {
+  (0,_modules_svg_converter__WEBPACK_IMPORTED_MODULE_0__.initSvgConverter)();
+  (0,_modules_theme_toggle__WEBPACK_IMPORTED_MODULE_1__.initThemeToggle)();
+});
+
+/***/ }),
+
+/***/ "./resources/js/modules/svg-converter.js":
+/*!***********************************************!*\
+  !*** ./resources/js/modules/svg-converter.js ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initSvgConverter: () => (/* binding */ initSvgConverter)
+/* harmony export */ });
+// File: resources/js/modules/svg-converter.js
+
+function initSvgConverter() {
+  function replaceImgWithSVG() {
+    document.querySelectorAll('img.svg-convert').forEach(function (img) {
+      var imageUrl = img.src;
+      var width = img.getAttribute('width');
+      var classes = img.classList;
+      fetch(imageUrl).then(function (response) {
+        return response.text();
+      }).then(function (data) {
+        var container = document.createElement('div');
+        container.innerHTML = data;
+        var svg = container.querySelector('svg');
+        if (svg) {
+          classes.forEach(function (cls) {
+            if (cls !== 'svg-convert') {
+              svg.classList.add(cls);
+            }
+          });
+          svg.classList.add('svg-converted');
+          if (width) {
+            svg.setAttribute('width', width);
+            svg.setAttribute('height', 'auto');
+          }
+          img.parentNode.replaceChild(svg, img);
+        }
+      })["catch"](function (error) {
+        console.error('Error loading or replacing the SVG:', imageUrl, error);
+      });
+    });
+  }
+  replaceImgWithSVG();
+}
+
+/***/ }),
+
+/***/ "./resources/js/modules/theme-toggle.js":
+/*!**********************************************!*\
+  !*** ./resources/js/modules/theme-toggle.js ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   initThemeToggle: () => (/* binding */ initThemeToggle)
+/* harmony export */ });
+function initThemeToggle() {
+  var themeToggleBtn = document.getElementById('theme-toggle');
+  var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+  var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+  var htmlElement = document.documentElement;
+  if (!themeToggleBtn || !themeToggleDarkIcon || !themeToggleLightIcon) {
+    console.error('Theme toggle elements not found');
+    return;
+  }
+  function setTheme(isDark) {
+    if (isDark) {
+      htmlElement.classList.add('dark');
+      themeToggleLightIcon.classList.remove('hidden');
+      themeToggleDarkIcon.classList.add('hidden');
+      localStorage.setItem('color-theme', 'dark');
+    } else {
+      htmlElement.classList.remove('dark');
+      themeToggleLightIcon.classList.add('hidden');
+      themeToggleDarkIcon.classList.remove('hidden');
+      localStorage.setItem('color-theme', 'light');
+    }
+  }
+
+  // Set initial theme based on local storage or system preference
+  var savedTheme = localStorage.getItem('color-theme');
+  var systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (savedTheme === 'dark' || !savedTheme && systemPrefersDark) {
+    setTheme(true);
+  } else {
+    setTheme(false);
+  }
+
+  // Toggle theme on button click
+  themeToggleBtn.addEventListener('click', function () {
+    setTheme(!htmlElement.classList.contains('dark'));
+  });
+}
+
 /***/ }),
 
 /***/ "./resources/css/app.css":
@@ -24,7 +131,6 @@ window.addEventListener('load', function () {
   \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -37,7 +143,6 @@ __webpack_require__.r(__webpack_exports__);
   \****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
@@ -103,6 +208,18 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 				}
 /******/ 			}
 /******/ 			return result;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
 /******/ 		};
 /******/ 	})();
 /******/ 	
